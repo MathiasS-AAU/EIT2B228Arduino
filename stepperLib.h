@@ -2,7 +2,7 @@
 class Stepper
 {
 	private:
-	unsigned int speedconst = 10;
+	unsigned int maxSpeed = 10000;
 	unsigned int accelconst = 100;
 	public:
 	void setStepTarget(int stepPosL, int stepPosR);

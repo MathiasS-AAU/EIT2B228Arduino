@@ -9,14 +9,14 @@ void Stepper::setStepTarget(int stepPosL, int stepPosR)
   int distL = stepPosL;
   if (distL < 0) distL=distL*-1;  //distance must be positive
   stepperL.setMaxSpeed(Stepper::maxSpeed);
-  stepperL.setAcceleration(Stepper::accelconst/(distL/100.0*distL/100.0)); //set acceleration in relation to distance
+  stepperL.setAcceleration(distL*1.0/(Stepper::accelconst*Stepper::accelconst)); //set acceleration in relation to distance and time
   //set movement target position
   stepperL.moveTo(stepPosL);
 
   int distR = stepPosR;
   if (distR < 0) distR=distR*-1;  //distance must be positive
   stepperR.setMaxSpeed(Stepper::maxSpeed);
-  stepperR.setAcceleration(Stepper::accelconst/(distR/100.0*distR/100.0)); //set acceleration in relation to distance
+  stepperR.setAcceleration(distR*1.0/(Stepper::accelconst*Stepper::accelconst)); //set acceleration in relation to distance and time
   //set movement target position
   stepperR.moveTo(stepPosR);
   return;

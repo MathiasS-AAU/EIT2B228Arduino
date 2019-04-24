@@ -9,21 +9,21 @@ void Stepper::setStepTarget(int stepPosL, int stepPosR)
   int distL = stepPosL;
   if (distL < 0) distL=distL*-1;  //distance must be positive
   stepperL.setMaxSpeed(Stepper::maxSpeed);
-  stepperL.setAcceleration(distL*1.0/(Stepper::accelconst*Stepper::accelconst)); //set acceleration in relation to distance and time
+  stepperL.setAcceleration(distL/(Stepper::accelconst*Stepper::accelconst)); //set acceleration in relation to distance and time
   //set movement target position
   stepperL.moveTo(stepPosL);
 
   int distR = stepPosR;
   if (distR < 0) distR=distR*-1;  //distance must be positive
   stepperR.setMaxSpeed(Stepper::maxSpeed);
-  stepperR.setAcceleration(distR*1.0/(Stepper::accelconst*Stepper::accelconst)); //set acceleration in relation to distance and time
+  stepperR.setAcceleration(distR/(Stepper::accelconst*Stepper::accelconst)); //set acceleration in relation to distance and time
   //set movement target position
   stepperR.moveTo(stepPosR);
   return;
 }
 
 //move to chosen target
-void Stepper::moveToTarget()
+void Stepper::moveToTarget(int8_t pwrSave)
 {
   //enable stepper current
   stepperR.enableOutputs();
@@ -38,8 +38,11 @@ void Stepper::moveToTarget()
   }
   
   //disable stepper current
-  stepperR.disableOutputs();
-  stepperL.disableOutputs();
+  if(pwrSave > 0)
+  {
+    stepperR.disableOutputs();
+    stepperL.disableOutputs();
+  }
   return;
 }
 
@@ -59,3 +62,4 @@ int *Stepper::currentStepPos()
   pos[1] = stepperR.currentPosition();
   return pos;
 }
+

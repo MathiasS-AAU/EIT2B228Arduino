@@ -63,3 +63,34 @@ int *Stepper::currentStepPos()
   return pos;
 }
 
+//Move to point
+void Stepper::goTo(int A, int B) 
+{
+  int a1 = sqrt(pow(Stepper::start_x, 2)+pow(Stepper::start_y, 2));
+  int a2 = sqrt(pow(Stepper::grid_x-Stepper::start_x, 2)+pow(Stepper::start_y, 2));
+  int b1 = sqrt(pow(A, 2)+pow(B, 2));
+  int b2 = sqrt((Stepper::grid_x-A)*(Stepper::grid_x-A)+B*B);
+  Serial.println("Vi kommer fra punkt");
+  Serial.println(a1);
+  Serial.println(a2);
+  Serial.println("og vil gerne til punkt");
+  Serial.println(b1);
+  Serial.println(b2);
+  
+  int move_mL = (b1-a1)*Stepper::STEPS_PER_MM;
+  int move_mR = (b2-a2)*Stepper::STEPS_PER_MM;
+  Serial.println("For at gore dette, flytter vi");
+  Serial.println(move_mL);
+  Serial.println("paa motor L, og ");
+  Serial.println(move_mR);
+  Serial.println("paa motor R");
+  
+  //Set the stepper target
+  Stepper::setStepTarget(move_mL, move_mR);
+  //Move to target (maybe we should not call this here?)
+  Stepper::moveToTarget(1);
+
+  Stepper::start_x = A;
+  Stepper::start_y = B;
+  return;
+}

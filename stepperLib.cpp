@@ -85,8 +85,11 @@ void Stepper::goTo(int A, int B)
   Serial.println(move_mR);
   Serial.println("paa motor R");
   
+  //Længde til nyt punkt
+  int lStepLenToPoint = (b1)*Stepper::STEPS_PER_MM;
+  int rStepLenToPoint = (b2)*Stepper::STEPS_PER_MM;
   //Set the stepper target
-  Stepper::setStepTarget(move_mL, move_mR);
+  Stepper::setStepTarget(lStepLenToPoin, rStepLenToPoint);
   //Move to target (maybe we should not call this here?)
   Stepper::moveToTarget(0);
 

@@ -5,17 +5,19 @@ using namespace std;
 class Stepper
 {
   private:
+  	float STEPS_PER_MM = 7;
 		unsigned int maxSpeed = 1000; //Documentation says max is about 4000 for one stepper with a 16 MHz MCU
 		unsigned int accelconst = 4; //time in seconds from point to point (if it works)
 	
-		//Position of calibration point in relation to wire length from corner to mount ring
-		int calLenL = 0;
-		int calLenR = 0;
 		//Position of calibration point in relation to XY position of ring
-		int mountCalPointX = 0;
-		int mountCalPointY = 0;
+		float mountCalPointX = 450-5.5; //450mm is half of the width of the box 5.5mm from wire mount
+		float mountCalPointY = 40-5.5; //40mm offset from wooden bar 5.5mm from wire mount
 		int probeOffsetX = 0;
 		int probeOffsetY = 0;
+		
+		//Position of calibration point in relation to wire length from corner to mount ring
+		int calLenL = sqrt(mountCalPointX*mountCalPointX+mountCalPointY*mountCalPointY)*STEPS_PER_MM;
+		int calLenR = sqrt((Stepper::grid_x-mountCalPointX)*(Stepper::grid_x-mountCalPointX)+mountCalPointY*mountCalPointY)*STEPS_PER_MM;
 	
 		int pointA;
 		int pointB;
@@ -26,7 +28,6 @@ class Stepper
 		int start_x = 0;
 		int start_y = 0;
 
-		int STEPS_PER_MM = 7;
 
 	public:
 		void calSwitch();

@@ -88,9 +88,39 @@ void Stepper::goTo(int A, int B)
   //Set the stepper target
   Stepper::setStepTarget(move_mL, move_mR);
   //Move to target (maybe we should not call this here?)
-  Stepper::moveToTarget(1);
+  Stepper::moveToTarget(0);
 
   Stepper::start_x = A;
   Stepper::start_y = B;
   return;
+}
+#define SW1 8
+#define SW2 9
+
+void Stepper::calSwitch()
+{
+  if(digitalRead(SW1) == HIGH || digitalRead(SW2) == HIGH)
+  {
+    stepperL.setMaxSpeed(100);
+    stepperL.setAcceleration(400);
+    stepperL.setCurrentPosition(0);
+    stepperL.moveTo(-999999);
+    
+    stepperR.setMaxSpeed(100);
+    stepperR.setAcceleration(400);
+    stepperR.setCurrentPosition(0);
+    stepperR.moveTo(-999999);
+    
+    while(digitalRead(SW1) == HIGH || digitalRead(SW2) == HIGH)
+    {
+      if(digitalRead(SW1) == HIGH) stepperL.run();
+      if(digitalRead(SW2) == HIGH) stepperR.run();
+    }
+    
+    stepperL.setCurrentPosition(Stepper::calLenL);
+    stepperL.moveTo(Stepper::calLenL);
+    
+    stepperR.setCurrentPosition(Stepper::calLenR);
+    stepperR.moveTo(Stepper::calLenR);
+  }
 }

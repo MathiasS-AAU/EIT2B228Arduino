@@ -9,10 +9,12 @@ void setup()
 
 void loop()
 {
-  motors.goTo(98, 43);
-  delay(1000);
-  motors.goTo(40, 27);
-  delay(1000);
-  Serial.println("ny");
-  delay(10000);
+  motors.goTo(0, 50);
+  delay(500);
+  motors.goTo(50, 50);
+  delay(500);
+  motors.goTo(50, 0);
+  delay(500);
+  motors.goTo(0, 0);
+  delay(500);
 }

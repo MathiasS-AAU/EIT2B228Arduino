@@ -5,7 +5,17 @@ using namespace std;
 class Stepper
 {
   private:
+		int pointA;
+		int pointB;
+
+		int start_x = 0;
+		int start_y = 0;
+		
+		int grid_x = 100;
+		int grid_y = 100;
+		
   	float STEPS_PER_MM = 7;
+  	
 		unsigned int maxSpeed = 1000; //Documentation says max is about 4000 for one stepper with a 16 MHz MCU
 		unsigned int accelconst = 4; //time in seconds from point to point (if it works)
 	
@@ -17,18 +27,8 @@ class Stepper
 		
 		//Position of calibration point in relation to wire length from corner to mount ring
 		int calLenL = sqrt(mountCalPointX*mountCalPointX+mountCalPointY*mountCalPointY)*STEPS_PER_MM;
-		int calLenR = sqrt((Stepper::grid_x-mountCalPointX)*(Stepper::grid_x-mountCalPointX)+mountCalPointY*mountCalPointY)*STEPS_PER_MM;
+		int calLenR = sqrt((grid_x-mountCalPointX)*(grid_x-mountCalPointX)+mountCalPointY*mountCalPointY)*STEPS_PER_MM;
 	
-		int pointA;
-		int pointB;
-
-		int grid_x = 100;
-		int grid_y = 100;
-
-		int start_x = 0;
-		int start_y = 0;
-
-
 	public:
 		void calSwitch();
 		void setStepTarget(int stepPosL, int stepPosR);

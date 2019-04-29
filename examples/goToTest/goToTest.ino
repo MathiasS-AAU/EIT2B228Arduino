@@ -5,16 +5,21 @@ Stepper motors;
 void setup()
 {  
    Serial.begin(9600);
+   motors.resetCurrentStepPos();
 }
 
 void loop()
 {
-  motors.goTo(0, 50);
-  delay(500);
-  motors.goTo(50, 50);
-  delay(500);
-  motors.goTo(50, 0);
-  delay(500);
-  motors.goTo(0, 0);
-  delay(500);
+  motors.goTo(800, 650);
+  delay(10000);
+  delay(10000);
+  motors.goTo(600, 650);
+  delay(10000);
+  delay(10000);
+  motors.goTo(600, 850);
+  delay(10000);
+  delay(10000);
+  motors.goTo(800, 850);
+  delay(10000);
+  delay(10000);
 }

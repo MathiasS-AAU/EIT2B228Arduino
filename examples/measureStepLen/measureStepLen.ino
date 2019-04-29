@@ -1,8 +1,8 @@
 #include <stepperLib.h>
 
 Stepper motors;
-int targetL = -500;
-int targetR = -500;
+int targetL = -1000;
+int targetR = -1000;
 
 void setup()
 {  
@@ -11,13 +11,10 @@ void setup()
 
 void loop()
 {
-  for(int i = 0; i<10; i++)
+    for(int i = 0; i<10; i++)
   {
     motors.moveToTarget(0);
-    for(int i = 0; i<60; i++)
-    delay(1000);
-    targetL = -targetL;
-    targetR = -targetR;
+    delay(100000);
     motors.setStepTarget( targetL, targetR);
   }
   motors.moveToTarget(1);

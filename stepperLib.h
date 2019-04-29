@@ -11,8 +11,8 @@ class Stepper
 		int start_x = 0;
 		int start_y = 0;
 		
-		int grid_x = 985;
-		int grid_y = 985;
+		float grid_x = 985;
+		float grid_y = 985;
 		
   	float STEPS_PER_MM = 1000.0/((226.4+216.0)/2.0);
   	
@@ -40,5 +40,5 @@ class Stepper
 		void setCurrentStepPos(int stepPosL, int stepPosR);
 		void resetCurrentStepPos();
 		int *currentStepPos();
-		void goTo(int A, int B); //Fix variable names for clarification. Possibly use the stepper step variables for positional data.
+		void goTo(float A, float B); //Fix variable names for clarification. Possibly use the stepper step variables for positional data.
 };

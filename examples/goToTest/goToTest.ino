@@ -10,16 +10,16 @@ void setup()
 
 void loop()
 {
-  motors.goTo(800, 650);
+  motors.goTo(489, 500);
+  delay(10000);
+  delay(10000);
+  motors.goTo(489, 650);
   delay(10000);
   delay(10000);
   motors.goTo(600, 650);
   delay(10000);
   delay(10000);
-  motors.goTo(600, 850);
-  delay(10000);
-  delay(10000);
-  motors.goTo(800, 850);
+  motors.goTo(600, 500);
   delay(10000);
   delay(10000);
 }

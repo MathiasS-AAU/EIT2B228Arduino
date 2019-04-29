@@ -72,12 +72,12 @@ int *Stepper::currentStepPos()
 }
 
 //Move to point
-void Stepper::goTo(int A, int B) 
+void Stepper::goTo(float A, float B) 
 {
   int a1 = sqrt(pow(Stepper::start_x, 2)+pow(Stepper::start_y, 2));
   int a2 = sqrt(pow(Stepper::grid_x-Stepper::start_x, 2)+pow(Stepper::start_y, 2));
-  int b1 = sqrt(pow(A, 2)+pow(B, 2));
-  int b2 = sqrt((Stepper::grid_x-A)*(Stepper::grid_x-A)+B*B);
+  float b1 = sqrt(A*A+B*B);
+  float b2 = sqrt((Stepper::grid_x-A)*(Stepper::grid_x-A)+B*B);
   //Serial.println("Vi kommer fra punkt");
   //Serial.println(a1);
   //Serial.println(a2);

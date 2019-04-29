@@ -5,7 +5,7 @@ AccelStepper stepperR(AccelStepper::FULL4WIRE, 48, 46, 44, 42);
 
 //set target position
 void Stepper::setStepTarget(int stepPosL, int stepPosR)
-{  
+{
   int distL = stepPosL;
   if (distL < 0) distL=distL*-1;  //distance must be positive
   stepperL.setMaxSpeed(Stepper::maxSpeed);
@@ -28,7 +28,7 @@ void Stepper::moveToTarget(int8_t pwrSave)
   //enable stepper current
   stepperR.enableOutputs();
   stepperL.enableOutputs();
-  
+
   //move to position
   while (stepperL.distanceToGo() != 0 && stepperR.distanceToGo() != 0) //.isRunning may fit better
   {
@@ -36,7 +36,7 @@ void Stepper::moveToTarget(int8_t pwrSave)
     stepperL.run();
     stepperR.run();
   }
-  
+
   //disable stepper current
   if(pwrSave > 0)
   {
@@ -72,27 +72,14 @@ int *Stepper::currentStepPos()
 }
 
 //Move to point
-void Stepper::goTo(float A, float B) 
+void Stepper::goTo(float A, float B)
 {
-  int a1 = sqrt(pow(Stepper::start_x, 2)+pow(Stepper::start_y, 2));
-  int a2 = sqrt(pow(Stepper::grid_x-Stepper::start_x, 2)+pow(Stepper::start_y, 2));
   float b1 = sqrt(A*A+B*B);
   float b2 = sqrt((Stepper::grid_x-A)*(Stepper::grid_x-A)+B*B);
-  //Serial.println("Vi kommer fra punkt");
-  //Serial.println(a1);
-  //Serial.println(a2);
   Serial.println("Vi vil gerne til punkt");
   Serial.println(b1);
   Serial.println(b2);
-  
-  int move_mL = (b1-a1)*Stepper::STEPS_PER_MM;
-  int move_mR = (b2-a2)*Stepper::STEPS_PER_MM;
-  Serial.println("For at gore dette, flytter vi");
-  Serial.println(move_mL);
-  Serial.println("paa motor L, og ");
-  Serial.println(move_mR);
-  Serial.println("paa motor R");
-  
+
   //Længde til nyt punkt
   Serial.println("Radius radius");
   int lStepLenToPoint = (b1)*Stepper::STEPS_PER_MM_L;
@@ -101,17 +88,15 @@ void Stepper::goTo(float A, float B)
   int rStepLenToPoint = (b2)*Stepper::STEPS_PER_MM_R;
   Serial.println(rStepLenToPoint);
   Serial.println("paa motor R");
+
   //Set the stepper target
   Stepper::setStepTarget(lStepLenToPoint, rStepLenToPoint);
   //Move to target (maybe we should not call this here?)
   Stepper::moveToTarget(0);
 
-  Stepper::start_x = A;
-  Stepper::start_y = B;
   return;
 }
-#define SW1 8
-#define SW2 9
+
 
 void Stepper::calSwitch()
 {
@@ -121,21 +106,21 @@ void Stepper::calSwitch()
     stepperL.setAcceleration(400);
     stepperL.setCurrentPosition(0);
     stepperL.moveTo(-999999);
-    
+
     stepperR.setMaxSpeed(100);
     stepperR.setAcceleration(400);
     stepperR.setCurrentPosition(0);
     stepperR.moveTo(-999999);
-    
+
     while(digitalRead(SW1) == HIGH || digitalRead(SW2) == HIGH)
     {
       if(digitalRead(SW1) == HIGH) stepperL.run();
       if(digitalRead(SW2) == HIGH) stepperR.run();
     }
-    
+
     stepperL.setCurrentPosition(Stepper::calLenL);
     stepperL.moveTo(Stepper::calLenL);
-    
+
     stepperR.setCurrentPosition(Stepper::calLenR);
     stepperR.moveTo(Stepper::calLenR);
   }

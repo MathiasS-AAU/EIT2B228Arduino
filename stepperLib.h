@@ -22,13 +22,13 @@ class Stepper
 		//Radius conversion constants from mm to steps
   	float STEPS_PER_MM = 1000.0/((226.4+216.0)/2.0);//average
   	float STEPS_PER_MM_R = 1000.0/226.4;//right
-  	float STEPS_PER_MM_L = 1000.0/216.0;//left
+  	float STEPS_PER_MM_L = STEPS_PER_MM_R;//1000.0/216.0;//left
 
   	//Max speed in steps per second
 		unsigned int maxSpeed = 1000; //Documentation says max is about 4000 for one stepper with a 16 MHz MCU
 
 		//Mysterious acceleration constant used to time steppers to get to their point at the same time.
-		unsigned int accelconst = 4; //time in seconds from point to point (if it works)
+		float accelconst = 4; //time in seconds from point to point (if it works)
 
 		//Position of calibration point in relation to XY position of mount point in mm.
 		float mountCalPointX = 495-5.5; //495mm is half of the width of the box 5.5mm from wire mount
@@ -64,4 +64,7 @@ class Stepper
 
 		//Move to position using XY coordinates in mm. Function calculates the steps for AccelStepper library and uses setStepTarget and moveToTarget to move to the point.
 		void goTo(float Xmm, float Ymm);
+		
+		//move to calibration point
+		void goToCal();
 };

@@ -117,12 +117,12 @@ void Stepper::calSwitch()
     stepperL.setMaxSpeed(100);
     stepperL.setAcceleration(400);
     stepperL.setCurrentPosition(0);
-    stepperL.moveTo(-999999);
+    stepperL.moveTo(999999);
 
     stepperR.setMaxSpeed(100);
     stepperR.setAcceleration(400);
     stepperR.setCurrentPosition(0);
-    stepperR.moveTo(-999999);
+    stepperR.moveTo(999999);
 
     while(digitalRead(SW1) == HIGH || digitalRead(SW2) == HIGH)
     {

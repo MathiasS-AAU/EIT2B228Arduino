@@ -31,8 +31,8 @@ class Stepper
 		float accelconst = 4; //time in seconds from point to point (if it works)
 
 		//Position of calibration point in relation to XY position of mount point in mm.
-		float mountCalPointX = 495-5.5; //495mm is half of the width of the box 5.5mm from wire mount
-		float mountCalPointY = 225-5.5; //225mm offset from wooden bar 5.5mm from wire mount
+		float mountCalPointX = 503-5.5; //503mm is half of the width of the box 5.5mm from wire mount
+		float mountCalPointY = 663-5.5; //225mm offset from wooden bar 5.5mm from wire mount
 
 		//Probe offset from mount point in mm
 		int probeOffsetX = 0;

@@ -1,4 +1,5 @@
 #include <stepperLib.h>
+#include <EEPROM.h>
 //if higher precision is needed, HALF4WIRE may be able to do half steps.
 AccelStepper stepperL(AccelStepper::FULL4WIRE, 28, 26, 24, 22);
 AccelStepper stepperR(AccelStepper::FULL4WIRE, 42, 44, 46, 48);
@@ -7,16 +8,20 @@ AccelStepper stepperR(AccelStepper::FULL4WIRE, 42, 44, 46, 48);
 void Stepper::setStepTarget(int stepPosL, int stepPosR)
 {
   float distL = stepPosL;
+  float distR = stepPosR;
   if (distL < 0) distL=distL*-1;  //distance must be positive
-  stepperL.setMaxSpeed(Stepper::maxSpeed);
-  stepperL.setAcceleration(distL/(Stepper::accelconst*Stepper::accelconst)); //set acceleration in relation to distance and time
+  if (distR < 0) distR=distR*-1;  //distance must be positive
+  
+  float distRatioL = stepPosL*1.0 / (stepPosL + stepPosR);
+  float distRatioR = stepPosR*1.0 / (stepPosL + stepPosR);
+  
+  stepperL.setMaxSpeed(Stepper::maxSpeed*1.0*distRatioL);
+  stepperL.setAcceleration((Stepper::maxSpeed/1.5)*distRatioL); //set acceleration in relation to distance and time
   //set movement target position
   stepperL.moveTo(stepPosL);
 
-  float distR = stepPosR;
-  if (distR < 0) distR=distR*-1;  //distance must be positive
-  stepperR.setMaxSpeed(Stepper::maxSpeed);
-  stepperR.setAcceleration(distR/(Stepper::accelconst*Stepper::accelconst)); //set acceleration in relation to distance and time
+  stepperR.setMaxSpeed(Stepper::maxSpeed*1.0*distRatioR);
+  stepperR.setAcceleration((Stepper::maxSpeed/1.5)*distRatioL); //set acceleration in relation to distance and time
   //set movement target position
   stepperR.moveTo(stepPosR);
   return;
@@ -69,6 +74,32 @@ int *Stepper::currentStepPos()
   pos[0] = stepperL.currentPosition();
   pos[1] = stepperR.currentPosition();
   return pos;
+}
+
+void Stepper::shutdown()
+{
+  int pos[2];
+  pos[0] = stepperL.currentPosition();
+  pos[1] = stepperR.currentPosition();
+  Serial.print("Saved LEFT: ");
+  Serial.println(pos[0]);
+  Serial.print("Saved RIGHT: ");
+  Serial.println(pos[1]);
+  EEPROM.put(0,pos);
+  return;
+}
+
+void Stepper::init()
+{
+  int pos[2];
+  EEPROM.get(0,pos);
+  Serial.print("Loaded LEFT: ");
+  Serial.println(pos[0]);
+  Serial.print("Loaded RIGHT: ");
+  Serial.println(pos[1]);
+  stepperL.setCurrentPosition(pos[0]);
+  stepperR.setCurrentPosition(pos[1]);
+  return;
 }
 
 //Move to point

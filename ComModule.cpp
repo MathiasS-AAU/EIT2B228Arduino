@@ -1,6 +1,6 @@
-#include "ComModule.h"
+/*#include "ComModule.h"
 
-ComModule::ComModule(/* args */)
+ComModule::ComModule()
 {
     sendCode();
     connect();
@@ -20,4 +20,4 @@ bool ComModule::connect() {
 
 int main() {
     return 1;
-}
+}*/

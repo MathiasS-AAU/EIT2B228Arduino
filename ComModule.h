@@ -1,9 +1,9 @@
-#include <string>
+/*#include <string>
 
 class ComModule
 {
 private:
-    /* data */
+    // data
     std::string GCODES [5];
     bool controlState;
     float lastPos [2];
@@ -11,10 +11,10 @@ private:
     float nextPos [2];
 
 public:
-    ComModule(/* args */);
+    ComModule();
     ~ComModule();
     bool sendCode();
     bool connect();
-};
+};/
 
-
+*/

@@ -25,10 +25,10 @@ class Stepper
   	float STEPS_PER_MM_L = STEPS_PER_MM_R;//1000.0/216.0;//left
 
   	//Max speed in steps per second
-		unsigned int maxSpeed = 1000; //Documentation says max is about 4000 for one stepper with a 16 MHz MCU
+		float maxSpeed = 600; //Documentation says max is about 4000 for one stepper with a 16 MHz MCU
 
 		//Mysterious acceleration constant used to time steppers to get to their point at the same time.
-		float accelconst = 4; //time in seconds from point to point (if it works)
+		float accelconst = 8; //time in seconds from point to point (if it works)
 
 		//Position of calibration point in relation to XY position of mount point in mm.
 		float mountCalPointX = 503-5.5; //503mm is half of the width of the box 5.5mm from wire mount
@@ -67,4 +67,10 @@ class Stepper
 		
 		//move to calibration point
 		void goToCal();
+		
+		//
+		void shutdown();
+		
+		//
+		void init();
 };

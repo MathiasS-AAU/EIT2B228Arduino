@@ -62,7 +62,8 @@ void loop()
 		
 		//Invalid input
 		default:
-			SerialComm.sendResponse("F unknown command: known commands are capitalized versions of {a, b, c, d, e, and k}");
+			SerialComm.sendResponse('F');
+			SerialComm.sendResponse("unknown command: known commands are capitalized versions of {a, b, c, d, e, and k}");
 		break;
 	}
 	

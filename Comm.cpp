@@ -44,7 +44,7 @@ void Comm::sendCommand(char buffer)
 	return;
 }
 
-void Comm::sendReponse(String buffer)
+void Comm::sendResponse(String buffer)
 {
 	//Check for module via module value
 	switch (Comm::module)
@@ -59,7 +59,7 @@ void Comm::sendReponse(String buffer)
 	return;
 }
 
-void Comm::sendReponse(char buffer)
+void Comm::sendResponse(char buffer)
 {
 	//Check for module via module value
 	switch (Comm::module)
@@ -112,7 +112,7 @@ char Comm::recieveCommand()
 	return -1;
 }
 
-char Comm::recieveReponse()
+char Comm::recieveResponse()
 {
 	//Check for module via module value
 	switch (Comm::module)

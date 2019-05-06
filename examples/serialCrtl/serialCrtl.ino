@@ -1,51 +1,66 @@
+//Serial library
 #include <Comm.h>
+
+//stepper library
 #include <stepperLib.h>
 
+//Serial library class
 Comm SerialComm;
+
+//stepper library class
 Stepper motor;
 
 void setup()
 {  
-	SerialComm.setup(1);
+	//Setup serial ports with settings for module 1 (Control module)
+	SerialComm.setup(1); 
+	
+	//load last position from EEPROM
 	motor.init();
-	SerialComm.sendReponse('R');
+	
+	//Report ready to recieve commands
+	SerialComm.sendResponse('R');
 }
 
 void loop()
 {
+	//Act on calibration switches
 	motor.calSwitch();
+	
+	//Check command input
 	char commandMsg = SerialComm.recieveCommand();
 	
+	//Check input for known commands
 	switch (commandMsg)
 	{
-		case 'K':
-		motor.shutdown();
-		SerialComm.sendReponse('K');
+		case 'K': //Save current position and report status as ready for shutdown
+			motor.shutdown();
+			SerialComm.sendResponse('K');
 		break;
-		case 'A':
-		SerialComm.sendReponse('W');
-		motor.goTo(300,300); //Go to point A (X,Y) in mm
-		SerialComm.sendReponse('R');
+		case 'A': //Go to point A
+			SerialComm.sendResponse('W');
+			motor.goTo(300,300); //Go to point A (X,Y) in mm
+			SerialComm.sendResponse('R');
 		break;
-		case 'B':
-		SerialComm.sendReponse('W');
-		motor.goTo(300,700); //Go to point B (X,Y) in mm
-		SerialComm.sendReponse('R');
+		case 'B': //Go to point B
+			SerialComm.sendResponse('W');
+			motor.goTo(300,700); //Go to point B (X,Y) in mm
+			SerialComm.sendResponse('R');
 		break;
-		case 'C':
-		SerialComm.sendReponse('W');
-		motor.goTo(700,300); //Go to point C (X,Y) in mm
-		SerialComm.sendReponse('R');
+		case 'C': //Go to point C
+			SerialComm.sendResponse('W');
+			motor.goTo(700,300); //Go to point C (X,Y) in mm
+			SerialComm.sendResponse('R');
 		break;
-		case 'D':
-		SerialComm.sendReponse('W');
-		motor.goTo(700,700); //Go to point D (X,Y) in mm
-		SerialComm.sendReponse('R');
+		case 'D': //Go to point D
+			SerialComm.sendResponse('W');
+			motor.goTo(700,700); //Go to point D (X,Y) in mm
+			SerialComm.sendResponse('R');
 		break;
-		case 'E':
-		SerialComm.sendReponse('W');
-		motor.goToCal(); //Go to calibration point
-		SerialComm.sendReponse('R');
+		case 'E': //Go to calibration point
+			SerialComm.sendResponse('W');
+			motor.goToCal(); //Go to calibration point
+			SerialComm.sendResponse('R');
 		break;
 	}
 				

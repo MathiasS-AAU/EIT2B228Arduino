@@ -1,48 +1,77 @@
+//Serial library
 #include <Comm.h>
 
+//Serial library class
 Comm SerialComm;
 
+//Kill switch pin
 #define KILLSWITCH 8
 
+//Power state of control module. 1 is on, 0 is off.
 int powerState = 1;
 
 void setup()
 {  
+	//Setup serial ports with settings for module 1 (Control module)
 	SerialComm.setup(0);
+	
+	//Define Kill Switch
 	pinMode(KILLSWITCH,OUTPUT);
+	
+	//Turn on control module
 	digitalWrite(KILLSWITCH, HIGH);
 }
 
 void loop()
 {
-
+	//Check command input
 	char commandMsg = SerialComm.recieveCommand();
-	char responceMsg = SerialComm.recieveReponse();
 	
+	//Check responce input
+	char responceMsg = SerialComm.recieveResponse();
+	
+	//Check input for known commands
 	switch (commandMsg)
 	{
+		//Send prepare to shutdown command
 		case 'K':
-		SerialComm.sendCommand(commandMsg);
+			SerialComm.sendCommand(commandMsg);
 		break;
+		
+		//Move to position. If shut down, turn on and send command when control module Reports status as ready.
 		case 'A'...'E':
-		if( powerState < 1)
-		{
-			powerState = 1;
-			digitalWrite(KILLSWITCH, HIGH);
-			while(responceMsg != 'R')
+			if( powerState < 1)
 			{
-				responceMsg = SerialComm.recieveReponse();
+				powerState = 1;
+				digitalWrite(KILLSWITCH, HIGH);
+				SerialComm.sendResponse("power on");
+				while(responceMsg != 'R')
+				{
+					responceMsg = SerialComm.recieveResponse();
+				}
 			}
-		}
-		SerialComm.sendCommand(commandMsg);
+			SerialComm.sendCommand(commandMsg);
+		break;
+		
+		//Ignored formatting input
+		case '\n':
+		break;
+		
+		case '\r':
+		break;
+		
+		//Invalid input
+		default:
+			SerialComm.sendResponse("F unknown command: known commands are capitalized versions of {a, b, c, d, e, and k}");
 		break;
 	}
-				
-		if (responceMsg == 'K')
-		{
-			digitalWrite(KILLSWITCH, LOW);
-			SerialComm.sendReponse('R');
-			SerialComm.sendReponse("Shutdown");
-			powerState = 0;
-		}
+	
+	//When control module reports ready to shut down, shut it down.
+	if (responceMsg == 'K')
+	{
+		digitalWrite(KILLSWITCH, LOW);
+		SerialComm.sendResponse("power off");
+		SerialComm.sendResponse('R');
+		powerState = 0;
+	}
 }

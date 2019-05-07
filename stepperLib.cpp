@@ -11,10 +11,10 @@ void Stepper::setStepTarget(int stepPosL, int stepPosR)
   float distR = stepPosR;
   if (distL < 0) distL=distL*-1;  //distance must be positive
   if (distR < 0) distR=distR*-1;  //distance must be positive
-  
+
   float distRatioL = stepPosL*1.0 / (stepPosL + stepPosR);
   float distRatioR = stepPosR*1.0 / (stepPosL + stepPosR);
-  
+
   stepperL.setMaxSpeed(Stepper::maxSpeed*1.0*distRatioL);
   stepperL.setAcceleration((Stepper::maxSpeed/1.5)*distRatioL); //set acceleration in relation to distance and time
   //set movement target position
@@ -113,7 +113,7 @@ void Stepper::goTo(float X, float Y)
   Serial.println(b1);
   Serial.println(b2);
 
-  //Længde til nyt punkt
+  // The distance to new point
   Serial.println("Radius radius");
   int lStepLenToPoint = (b1)*Stepper::STEPS_PER_MM_L;
     Serial.println(lStepLenToPoint);

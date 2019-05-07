@@ -30,6 +30,14 @@ void loop()
 	//Check responce input
 	char responceMsg = SerialComm.recieveResponse();
 	
+		//When control module reports ready to shut down, shut it down.
+	if (responceMsg == 'K')
+	{
+		digitalWrite(KILLSWITCH, LOW);
+		SerialComm.sendResponse("power off");
+		SerialComm.sendResponse('R');
+		powerState = 0;
+	}
 	//Check input for known commands
 	switch (commandMsg)
 	{
@@ -70,12 +78,4 @@ void loop()
 		break;
 	}
 	
-	//When control module reports ready to shut down, shut it down.
-	if (responceMsg == 'K')
-	{
-		digitalWrite(KILLSWITCH, LOW);
-		SerialComm.sendResponse("power off");
-		SerialComm.sendResponse('R');
-		powerState = 0;
-	}
 }

@@ -60,6 +60,9 @@ void loop()
 		case '\r':
 		break;
 		
+		case -1:
+		break;
+		
 		//Invalid input
 		default:
 			SerialComm.sendResponse('F');

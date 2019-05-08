@@ -12,12 +12,12 @@ class Stepper
 		int pointB;
 
 		//????????????????????????
-		int start_x = 0;
-		int start_y = 0;
+		int startX = 0;
+		int startY = 0;
 
 		//Size of grid in mm
-		float grid_x = 985;
-		float grid_y = 985;
+		float gridX = 985;
+		float gridY = 985;
 
 		//Radius conversion constants from mm to steps
   	float STEPS_PER_MM = 1000.0/((226.4+216.0)/2.0);//average
@@ -28,7 +28,7 @@ class Stepper
 		float maxSpeed = 600; //Documentation says max is about 4000 for one stepper with a 16 MHz MCU
 
 		//Mysterious acceleration constant used to time steppers to get to their point at the same time.
-		float accelconst = 8; //time in seconds from point to point (if it works)
+		float accelConst = 8; //time in seconds from point to point (if it works)
 
 		//Position of calibration point in relation to XY position of mount point in mm.
 		float mountCalPointX = 503-5.5; //503mm is half of the width of the box 5.5mm from wire mount
@@ -40,7 +40,7 @@ class Stepper
 
 		//Position of calibration point in relation to wire length from corner to mount ring in steps.
 		int calLenL = sqrt(mountCalPointX*mountCalPointX+mountCalPointY*mountCalPointY)*STEPS_PER_MM_L;
-		int calLenR = sqrt((grid_x-mountCalPointX)*(grid_x-mountCalPointX)+mountCalPointY*mountCalPointY)*STEPS_PER_MM_R;
+		int calLenR = sqrt((gridX-mountCalPointX)*(gridX-mountCalPointX)+mountCalPointY*mountCalPointY)*STEPS_PER_MM_R;
 
 	public:
 		//When Left or right calibration buttons are presssed pull the left or right wire shorter with near constant speed, slight acceleration, and no deceleration.

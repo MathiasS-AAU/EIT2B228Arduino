@@ -34,30 +34,37 @@ void loop()
 	switch (commandMsg)
 	{
 		case 'K': //Save current position and report status as ready for shutdown
-			motor.shutdown();
 			SerialComm.sendResponse('K');
+			SerialComm.sendResponse('W');
+			motor.shutdown();
+			SerialComm.sendResponse('S');
 		break;
 		case 'A': //Go to point A
+			SerialComm.sendResponse('A');
 			SerialComm.sendResponse('W');
 			motor.goTo(300,300); //Go to point A (X,Y) in mm
 			SerialComm.sendResponse('R');
 		break;
 		case 'B': //Go to point B
+			SerialComm.sendResponse('B');
 			SerialComm.sendResponse('W');
 			motor.goTo(300,700); //Go to point B (X,Y) in mm
 			SerialComm.sendResponse('R');
 		break;
 		case 'C': //Go to point C
+			SerialComm.sendResponse('C');
 			SerialComm.sendResponse('W');
 			motor.goTo(700,300); //Go to point C (X,Y) in mm
 			SerialComm.sendResponse('R');
 		break;
 		case 'D': //Go to point D
+			SerialComm.sendResponse('D');
 			SerialComm.sendResponse('W');
 			motor.goTo(700,700); //Go to point D (X,Y) in mm
 			SerialComm.sendResponse('R');
 		break;
 		case 'E': //Go to calibration point
+			SerialComm.sendResponse('E');
 			SerialComm.sendResponse('W');
 			motor.goToCal(); //Go to calibration point
 			SerialComm.sendResponse('R');

@@ -106,9 +106,9 @@ void Stepper::init()
 void Stepper::goTo(float X, float Y)
 {
   float A = X-probeOffsetX;
-  float B = Y-probeOffsetY;
+  float B = (Y-probeOffsetY)-offSetY;
   float b1 = sqrt(A*A+B*B);
-  float b2 = sqrt((Stepper::grid_x-A)*(Stepper::grid_x-A)+B*B);
+  float b2 = sqrt((Stepper::gridX-A)*(Stepper::gridX-A)+B*B);
   Serial.println("Vi vil gerne til punkt");
   Serial.println(b1);
   Serial.println(b2);
@@ -121,6 +121,10 @@ void Stepper::goTo(float X, float Y)
   int rStepLenToPoint = (b2)*Stepper::STEPS_PER_MM_R;
   Serial.println(rStepLenToPoint);
   Serial.println("paa motor R");
+
+  Serial.println("CallenL og R");
+  Serial.println(calLenL);
+  Serial.println(calLenR);
 
   //Set the stepper target
   Stepper::setStepTarget(lStepLenToPoint, rStepLenToPoint);

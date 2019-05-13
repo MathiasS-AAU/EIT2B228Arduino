@@ -108,7 +108,7 @@ void Stepper::goTo(float X, float Y)
   float A = X-probeOffsetX;
   float B = Y-probeOffsetY;
   float b1 = sqrt(A*A+B*B);
-  float b2 = sqrt((Stepper::grid_x-A)*(Stepper::grid_x-A)+B*B);
+  float b2 = sqrt((Stepper::gridX-A)*(Stepper::gridX-A)+B*B);
   Serial.println("Vi vil gerne til punkt");
   Serial.println(b1);
   Serial.println(b2);

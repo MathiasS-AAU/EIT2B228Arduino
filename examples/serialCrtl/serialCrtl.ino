@@ -48,7 +48,7 @@ void loop()
 		case 'B': //Go to point B
 			SerialComm.sendResponse('B');
 			SerialComm.sendResponse('W');
-			motor.goTo(300,700); //Go to point B (X,Y) in mm
+			motor.goTo(300,680); //Go to point B (X,Y) in mm
 			SerialComm.sendResponse('R');
 		break;
 		case 'C': //Go to point C
@@ -60,7 +60,7 @@ void loop()
 		case 'D': //Go to point D
 			SerialComm.sendResponse('D');
 			SerialComm.sendResponse('W');
-			motor.goTo(700,700); //Go to point D (X,Y) in mm
+			motor.goTo(700,680); //Go to point D (X,Y) in mm
 			SerialComm.sendResponse('R');
 		break;
 		case 'E': //Go to calibration point

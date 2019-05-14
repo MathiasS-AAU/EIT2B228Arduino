@@ -36,8 +36,8 @@ class Stepper
 
 		//Probe offset from mount point in mm
 		int probeOffsetX = 0;
-		int probeOffsetY = 48;
-		int offSetY = -30;
+		int probeOffsetY = 55;
+		int offSetY = -37;
 
 		//Position of calibration point in relation to wire length from corner to mount ring in steps.
 		int calLenL = 800*STEPS_PER_MM_L;

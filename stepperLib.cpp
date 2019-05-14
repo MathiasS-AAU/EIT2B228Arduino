@@ -106,9 +106,9 @@ void Stepper::init()
 void Stepper::goTo(float X, float Y)
 {
   float A = X-probeOffsetX;
-  float B = Y-probeOffsetY;
+  float B = ((Y-(Y*0.03))-probeOffsetY)-offSetY;
   float b1 = sqrt(A*A+B*B);
-  float b2 = sqrt((Stepper::grid_x-A)*(Stepper::grid_x-A)+B*B);
+  float b2 = sqrt((Stepper::gridX-A)*(Stepper::gridX-A)+B*B);
   Serial.println("Vi vil gerne til punkt");
   Serial.println(b1);
   Serial.println(b2);
@@ -157,8 +157,16 @@ void Stepper::calSwitch()
 
     while(digitalRead(SW1) == HIGH || digitalRead(SW2) == HIGH)
     {
-      if(digitalRead(SW1) == HIGH) stepperL.run();
-      if(digitalRead(SW2) == HIGH) stepperR.run();
+      if(digitalRead(SW1) == HIGH)
+      {
+        Serial.println("Hoejre motor koerer...");
+        stepperL.run();
+      }
+      if(digitalRead(SW2) == HIGH)
+      {
+        Serial.println("Venstre motor koerer...");
+        stepperR.run();
+      }
     }
 
     stepperL.setCurrentPosition(Stepper::calLenL);

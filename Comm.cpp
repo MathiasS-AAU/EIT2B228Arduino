@@ -1,19 +1,20 @@
 #include <Comm.h>
 
 void Comm::setup(uint8_t device)
-{
-	Serial.begin(9600);
-	Serial3.begin(9600);
-	
+{	
 	Comm::module=device;
 	//Check for module via module value
 	switch (Comm::module)
 	{
 		case 0://CommMod
+			Serial.begin(9600);
+			Serial2.begin(9600);
 			Serial.println("DEVICE 0: Communications Module");
 		break;
 	
 		case 1://CtrlMod
+			Serial.begin(9600);
+			Serial3.begin(9600);
 			Serial.println("DEVICE 1: Control Module");
 		break;
 	}
@@ -26,7 +27,7 @@ void Comm::sendCommand(String buffer)
 	switch (Comm::module)
 	{
 		case 0://CommMod
-		Serial3.println(buffer);
+		Serial2.println(buffer);
 		break;
 	}
 	return;
@@ -38,7 +39,7 @@ void Comm::sendCommand(char buffer)
 	switch (Comm::module)
 	{
 		case 0://CommMod
-		Serial3.println(buffer);
+		Serial2.println(buffer);
 		break;
 	}
 	return;
@@ -118,9 +119,9 @@ char Comm::recieveResponse()
 	switch (Comm::module)
 	{
 		case 0://CommMod
-			if(Serial3.available())
+			if(Serial2.available())
 			{
-				char controlResponse = Serial3.read();
+				char controlResponse = Serial2.read();
 				// Userinput debug for serialmonitor
 				if (controlResponse != '\n' && controlResponse != '\r' && controlResponse >= 'A' && controlResponse <= 'Z')
 				{

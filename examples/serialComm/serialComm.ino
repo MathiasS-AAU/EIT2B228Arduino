@@ -30,7 +30,7 @@ void loop()
 	//Check responce input
 	char responceMsg = SerialComm.recieveResponse();
 	
-		//When control module reports ready to shut down, shut it down.
+	//When control module reports ready to shut down, shut it down.
 	if (responceMsg == 'S')//For echo(saying what command is executed) support shutdown response is now S
 	{
 		digitalWrite(KILLSWITCH, LOW);

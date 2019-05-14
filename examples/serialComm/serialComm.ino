@@ -82,4 +82,3 @@ void loop()
 	}
 
 }
->>>>>>> 4aa77b3fcc845b45a9f550bdefbe813bd2a81b89

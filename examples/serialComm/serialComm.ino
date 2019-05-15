@@ -36,7 +36,6 @@ void loop()
 		digitalWrite(KILLSWITCH, LOW);
 		SerialComm.sendResponse("power off");
 		SerialComm.sendResponse('R');
-		Serial3.end();
 		powerState = 0;
 	}
 	//Check input for known commands
@@ -52,7 +51,6 @@ void loop()
 		case 'A'...'E':
 			if( powerState < 1)
 			{
-        Serial3.begin(9600);
 				powerState = 1;
 				digitalWrite(KILLSWITCH, HIGH);
 				SerialComm.sendResponse("power on");

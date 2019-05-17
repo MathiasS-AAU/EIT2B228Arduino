@@ -35,6 +35,7 @@ void loop()
 	{
 		digitalWrite(KILLSWITCH, LOW);
 		SerialComm.sendResponse("power off");
+    delay(20000);
 		SerialComm.sendResponse('R');
 		powerState = 0;
 	}
